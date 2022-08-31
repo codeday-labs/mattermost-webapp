@@ -2,37 +2,66 @@
 // See LICENSE.txt for license information.
 
 import {connect} from 'react-redux';
+
 import {bindActionCreators, Dispatch} from 'redux';
 
 import {showActionsDropdownPulsatingDot} from 'selectors/actions_menu';
+
 import {setActionsMenuInitialisationState} from 'mattermost-redux/actions/preferences';
+
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/selectors/ent... Remove this comment to see the full error message
 import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/selectors/ent... Remove this comment to see the full error message
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 
 import {
     get,
     isCollapsedThreadsEnabled,
+
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/selectors/ent... Remove this comment to see the full error message
 } from 'mattermost-redux/selectors/entities/preferences';
+
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/selectors/ent... Remove this comment to see the full error message
 import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/selectors/ent... Remove this comment to see the full error message
 import {getUser} from 'mattermost-redux/selectors/entities/users';
 
+// @ts-expect-error TS(2307): Cannot find module 'mattermost-redux/types/actions... Remove this comment to see the full error message
 import {GenericAction} from 'mattermost-redux/types/actions';
+
+// @ts-expect-error TS(2307): Cannot find module '@mattermost/types/emojis' or i... Remove this comment to see the full error message
 import {Emoji} from '@mattermost/types/emojis';
+
+// @ts-expect-error TS(2307): Cannot find module '@mattermost/types/posts' or it... Remove this comment to see the full error message
 import {Post} from '@mattermost/types/posts';
 
+// @ts-expect-error TS(2307): Cannot find module 'actions/post_actions' or its c... Remove this comment to see the full error message
 import {markPostAsUnread, emitShortcutReactToLastPostFrom} from 'actions/post_actions';
 
+// @ts-expect-error TS(2307): Cannot find module 'selectors/emojis' or its corre... Remove this comment to see the full error message
 import {getShortcutReactToLastPostEmittedFrom, getOneClickReactionEmojis} from 'selectors/emojis';
+
+// @ts-expect-error TS(2307): Cannot find module 'selectors/posts' or its corres... Remove this comment to see the full error message
 import {getIsPostBeingEditedInRHS, isEmbedVisible} from 'selectors/posts';
+
+// @ts-expect-error TS(2307): Cannot find module 'selectors/views/browser' or it... Remove this comment to see the full error message
 import {getIsMobileView} from 'selectors/views/browser';
 
+// @ts-expect-error TS(2307): Cannot find module 'types/store' or its correspond... Remove this comment to see the full error message
 import {GlobalState} from 'types/store';
 
+// @ts-expect-error TS(2307): Cannot find module 'utils/post_utils' or its corre... Remove this comment to see the full error message
 import {shouldShowActionsMenu} from 'utils/post_utils';
+
+// @ts-expect-error TS(2307): Cannot find module 'utils/channel_utils' or its co... Remove this comment to see the full error message
 import {isArchivedChannel} from 'utils/channel_utils';
+
+// @ts-expect-error TS(2307): Cannot find module 'utils/constants' or its corres... Remove this comment to see the full error message
 import {Preferences} from 'utils/constants';
 
-import RhsRootPost from './rhs_root_post.jsx';
+import RhsRootPost from './rhs_root_post';
 
 interface OwnProps {
     post: Post ;
@@ -92,4 +121,5 @@ function mapDispatchToProps(dispatch: Dispatch<GenericAction>) {
     };
 }
 
+// @ts-expect-error TS(2769): No overload matches this call.
 export default connect(mapStateToProps, mapDispatchToProps)(RhsRootPost);

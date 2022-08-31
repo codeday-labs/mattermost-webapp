@@ -4,17 +4,26 @@
 import {shallow} from 'enzyme';
 import React from 'react';
 
+import RhsRootPost from 'components/rhs_root_post/rhs_root_post.jsx';
+
 import {Posts} from 'mattermost-redux/constants';
 
-import RhsRootPost from 'components/rhs_root_post/rhs_root_post.jsx';
 import EmojiMap from 'utils/emoji_map';
+
 import PostPreHeader from 'components/post_view/post_pre_header';
 
 jest.mock('utils/post_utils', () => ({
+
+    
     isEdited: jest.fn().mockReturnValue(true),
+
+    
     isSystemMessage: jest.fn().mockReturnValue(false),
+
+    
     fromAutoResponder: jest.fn().mockReturnValue(false),
 }));
+
 
 describe('components/RhsRootPost', () => {
     const post = {
@@ -53,9 +62,13 @@ describe('components/RhsRootPost', () => {
         channelIsArchived: false,
         channelType: 'O',
         channelDisplayName: 'Test',
+
+        
         handleCardClick: jest.fn(),
         shortcutReactToLastPostEmittedFrom: '',
         actions: {
+
+            
             markPostAsUnread: jest.fn(),
         },
         emojiMap: new EmojiMap(new Map()),
@@ -63,14 +76,17 @@ describe('components/RhsRootPost', () => {
         isMobileView: false,
     };
 
+    
     test('should match snapshot', () => {
         const wrapper = shallow(
             <RhsRootPost {...baseProps}/>,
         );
 
+        
         expect(wrapper).toMatchSnapshot();
     });
 
+ 
     test('should match snapshot when flagged', () => {
         const props = {
             ...baseProps,
@@ -80,9 +96,11 @@ describe('components/RhsRootPost', () => {
             <RhsRootPost {...props}/>,
         );
 
+        
         expect(wrapper).toMatchSnapshot();
     });
 
+    
     test('should match snapshot on deleted post', () => {
         const props = {
             ...baseProps,
@@ -95,9 +113,11 @@ describe('components/RhsRootPost', () => {
             <RhsRootPost {...props}/>,
         );
 
+        
         expect(wrapper).toMatchSnapshot();
     });
 
+    
     test('should match snapshot on flagged, deleted post', () => {
         const props = {
             ...baseProps,
@@ -111,9 +131,11 @@ describe('components/RhsRootPost', () => {
             <RhsRootPost {...props}/>,
         );
 
+        
         expect(wrapper).toMatchSnapshot();
     });
 
+    
     test('should match snapshot on CRT enabled', () => {
         const wrapper = shallow(
             <RhsRootPost
@@ -122,21 +144,26 @@ describe('components/RhsRootPost', () => {
             />,
         );
 
+
         expect(wrapper).toMatchSnapshot();
     });
 
+    
     test('should show pointer when alt is held down', () => {
         const wrapper = shallow(
             <RhsRootPost {...baseProps}/>,
         );
 
+        
         expect(wrapper.find('.post.cursor--pointer').exists()).toBe(false);
 
         wrapper.setState({alt: true});
 
+        
         expect(wrapper.find('.post.cursor--pointer').exists()).toBe(true);
     });
 
+    
     test('should not show pointer when alt is held down, but channel is archived', () => {
         const props = {
             ...baseProps,
@@ -147,13 +174,16 @@ describe('components/RhsRootPost', () => {
             <RhsRootPost {...props}/>,
         );
 
+        
         expect(wrapper.find('.post.cursor--pointer').exists()).toBe(false);
 
         wrapper.setState({alt: true});
 
+        
         expect(wrapper.find('.post.cursor--pointer').exists()).toBe(false);
     });
 
+    
     test('should call markPostAsUnread when post is alt+clicked on', () => {
         const wrapper = shallow(
             <RhsRootPost {...baseProps}/>,
@@ -161,13 +191,16 @@ describe('components/RhsRootPost', () => {
 
         wrapper.simulate('click', {altKey: false});
 
+        
         expect(baseProps.actions.markPostAsUnread).not.toHaveBeenCalled();
 
         wrapper.simulate('click', {altKey: true});
 
+        
         expect(baseProps.actions.markPostAsUnread).toHaveBeenCalled();
     });
 
+   
     test('should not call markPostAsUnread when post is alt+clicked on when channel is archived', () => {
         const props = {
             ...baseProps,
@@ -180,13 +213,16 @@ describe('components/RhsRootPost', () => {
 
         wrapper.simulate('click', {altKey: false});
 
+        
         expect(props.actions.markPostAsUnread).not.toHaveBeenCalled();
 
         wrapper.simulate('click', {altKey: true});
 
+        
         expect(props.actions.markPostAsUnread).not.toHaveBeenCalled();
     });
 
+    
     test('should match snapshot hovered', () => {
         const wrapper = shallow(
             <RhsRootPost {...baseProps}/>,
@@ -194,18 +230,27 @@ describe('components/RhsRootPost', () => {
 
         wrapper.setState({hover: true});
 
+        
         expect(wrapper).toMatchSnapshot();
     });
 
-    test('should pass props correctly to PostPreHeader', () => {
+    
         const wrapper = shallow(
             <RhsRootPost {...baseProps}/>,
         );
 
         const postPreHeader = wrapper.find(PostPreHeader);
+
+        
         expect(postPreHeader).toHaveLength(1);
+
+       
         expect(postPreHeader.prop('isFlagged')).toEqual(baseProps.isFlagged);
+
+        
         expect(postPreHeader.prop('isPinned')).toEqual(baseProps.post.is_pinned);
+
+        
         expect(postPreHeader.prop('channelId')).toEqual(baseProps.post.channel_id);
     });
 });
