@@ -81,9 +81,9 @@ type OwnProps = {
     handleCommentClick: $TSFixMeFunction;
     isLastPost?: boolean;
     shortcutReactToLastPostEmittedFrom?: string;
-    actions?: {
+    actions: {
         markPostAsUnread: $TSFixMeFunction;
-        emitShortcutReactToLastPostFrom?: $TSFixMeFunction;
+        emitShortcutReactToLastPostFrom: $TSFixMeFunction;
         setActionsMenuInitialisationState?: $TSFixMeFunction;
     };
     timestampProps?: $TSFixMe;
@@ -143,7 +143,6 @@ export default class RhsRootPost extends React.PureComponent<Props, State> {
                 },
             } = this.props;
 
-            // Setting the last message emoji action to empty to clean up the redux state
             emitShortcutReactToLastPostFrom(Locations.NO_WHERE);
 
             // Following are the types of posts on which adding reaction is not possible
@@ -359,7 +358,6 @@ export default class RhsRootPost extends React.PureComponent<Props, State> {
     };
 
     handleActionsMenuGotItClick = () => {
-        // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         this.props.actions.setActionsMenuInitialisationState?.({
             [Preferences.ACTIONS_MENU_VIEWED]: true,
         });
@@ -642,10 +640,7 @@ export default class RhsRootPost extends React.PureComponent<Props, State> {
             />
         );
 
-        const showSlot = isPostBeingEdited
-        AutoHeightSlots.SLOT2 ? 
-        : AutoHeightSlots.SLOT1;
-
+        const showSlot = isPostBeingEdited ? AutoHeightSlots.SLOT2 : AutoHeightSlots.SLOT1;
         return (
             <PostAriaLabelDiv
                 ref={this.postRef}
@@ -656,60 +651,64 @@ export default class RhsRootPost extends React.PureComponent<Props, State> {
                 className={`thread__root a11y__section ${this.getClassName(
                     post,
                     isSystemMessage,
-                    isMeMessage
+                    isMeMessage,
                 )}`}
                 onClick={this.handlePostClick}
                 onMouseOver={this.setHover}
                 onMouseLeave={this.unsetHover}
-                data-a11y-sort-order="0"
+                data-a11y-sort-order='0'
             >
                 <PostPreHeader
                     isFlagged={this.props.isFlagged}
                     isPinned={post.is_pinned}
                     channelId={post.channel_id}
                 />
-                <div role="application" className="post__content">
-                    <div className="post__img">
+                <div
+                    role='application'
+                    className='post__content'
+                >
+                    <div className='post__img'>
                         <PostProfilePicture
                             compactDisplay={this.props.compactDisplay}
                             isBusy={this.props.isBusy}
                             isRHS={true}
                             post={post}
                             userId={post.user_id}
-                            channelId={post.channel_id}
                         />
                     </div>
                     <div>
-                        <div className="post__header" ref={this.postHeaderRef}>
-                            <div className="col__name">
+                        <div
+                            className='post__header'
+                            ref={this.postHeaderRef}
+                        >
+                            <div className='col__name'>
                                 {userProfile}
                                 {botIndicator}
                                 {customStatus}
                             </div>
-                            <div className="col">
+                            <div className='col'>
                                 {this.renderPostTime(isEphemeral)}
                                 {postInfoIcon}
                             </div>
                             {!isPostBeingEdited && dotMenuContainer}
                         </div>
-                        <div className="post__body">
+                        <div className='post__body'>
                             <div className={postClass}>
                                 <AutoHeightSwitcher
                                     showSlot={showSlot}
                                     shouldScrollIntoView={isPostBeingEdited}
                                     slot1={message}
-                                    slot2={<EditPost />}
+                                    slot2={<EditPost/>}
                                     onTransitionEnd={() =>
                                         document.dispatchEvent(
-                                            new Event(
-                                                AppEvents.FOCUS_EDIT_TEXTBOX
-                                            )
-                                        )
+                                            new Event(AppEvents.FOCUS_EDIT_TEXTBOX))
                                     }
                                 />
                             </div>
                             {fileAttachment}
-                            <ReactionList post={post} />
+                            <ReactionList
+                                post={post}
+                            />
                         </div>
                     </div>
                 </div>
